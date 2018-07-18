@@ -1,0 +1,96 @@
+<div class="alert alert-danger" role="alert" *ngIf="errors.length > 0">
+  <ul>
+    <li *ngFor="let error of errors">
+      {{ error }}
+    </li>
+  </ul>
+</div>
+<div class="alert alert-success" role="alert" *ngIf="successfulSave">
+  Check verified successfully!
+</div>
+<form novalidate [formGroup]="checkForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+  <div class="form-group" [ngClass]="{'has-error':!checkForm.controls.payee.valid && checkForm.controls.payee.touched}">
+    <div class="col-sm-6">
+      <label class="control-label" for="payeeCtr">Payee</label><span>*</span>
+      <input type="text" class="form-control" id="payeeCtr" formControlName="payee" />
+    </div>
+  </div>
+  <div class="alert alert-danger" role="alert"
+       *ngIf="!checkForm.controls.payee.valid && checkForm.controls.payee.touched">
+    You must enter Payee
+  </div>
+  <div class="form-group" [ngClass]="{'has-error':!checkForm.controls.amount.valid && checkForm.controls.amount.touched}">
+    <div class="col-sm-6">
+      <label class="control-label" for="amountCtr">Amount</label><span>*</span>
+      <input type="number" class="form-control" id="amountCtr" formControlName="amount" />
+    </div>
+  </div>
+  <div class="alert alert-danger" role="alert"
+       *ngIf="!checkForm.controls.amount.valid && checkForm.controls.amount.touched">
+    Amount must be numeric, greater than 0, and smaller than 10000000000000"
+  </div>
+  <div class="form-group" [ngClass]="{'has-error':!checkForm.controls.checkdate.valid && checkForm.controls.checkdate.touched}">
+    <div class="col-sm-6">
+      <label class="control-label" for="checkDateCtr">Check Date</label><span>*</span>
+
+      <input type="date"
+             formControlName="checkdate" />
+    </div>
+  </div>
+  <div class="alert alert-danger" role="alert"
+       *ngIf="!checkForm.controls.checkdate.valid && checkForm.controls.checkdate.touched">
+    You must enter Date
+  </div>
+
+
+  <div class="form-group">
+    <div class="col-sm-3">
+      <button type="submit" class="btn btn-primary" [disabled]="checkForm.invalid">Submit</button>
+    </div>
+  </div>
+
+</form>
+
+
+
+<div *ngIf="checkOutput">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">Payee</label>
+      </div>
+      <div class="col-75 ">
+        <textarea readonly>{{checkOutput.payee}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">Check Date</label>
+      </div>
+      <div class="col-75 ">
+        <textarea readonly>{{checkOutput.checkDate}}</textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25 ">
+        <label for="fname">Amount</label>
+      </div>
+      <div class="col-75 ">
+        <textarea readonly class="notes">{{checkOutput.amount}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">Amount in Words</label>
+      </div>
+      <div class="col-75 ">
+        <textarea readonly class="notes">{{checkOutput.amountInWords}}</textarea>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
